@@ -28,10 +28,10 @@
                             </small>
                         </div>
 
-                        <div class="col-md-4">
+                        <!-- <div class="col-md-4">
                             <label>SANDI:</label>
                             <input type="number" id="sandi" name="sandi" class="form-control" required>
-                        </div>
+                        </div> -->
                     </div>
 
                     <button class="btn btn-primary">
@@ -70,11 +70,11 @@
                                     <td>{{ $item->id_tabungan }}</td>
 
                                     <td>
-                                        {{ $item->jenis == 'masuk' ? number_format($item->jumlah, 0, ',', '.') : '' }}
+                                        {{ $item->jenis == 'keluar' ? number_format($item->jumlah, 0, ',', '.') : '' }}
                                     </td>
 
                                     <td>
-                                        {{ $item->jenis == 'keluar' ? number_format($item->jumlah, 0, ',', '.') : '' }}
+                                        {{ $item->jenis == 'masuk' ? number_format($item->jumlah, 0, ',', '.') : '' }}
                                     </td>
 
                                     <td>{{ number_format($item->saldo, 0, ',', '.') }}</td>

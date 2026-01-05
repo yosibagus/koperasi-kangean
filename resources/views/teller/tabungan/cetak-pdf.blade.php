@@ -61,7 +61,7 @@
         }
 
         .row-gap {
-            height: 4.2mm;
+            height: 3.5mm;
             line-height: 4.2mm;
             padding: 0;
         }
@@ -79,11 +79,7 @@
         <tbody>
 
             {{-- spasi awal sebelum baris pertama --}}
-            @for ($i = 1; $i < $currentRow; $i++)
-                <tr>
-                    <td colspan="6" class="row-gap">&nbsp;</td>
-                </tr>
-            @endfor
+           @for ($i = 0; $i < $emptyRows; $i++) <tr> <td colspan="6" class="row-gap">&nbsp;</td> </tr> @endfor
 
             {{-- cetak setiap baris --}}
             @foreach ($rows as $item)
@@ -93,7 +89,7 @@
 
                 <div class="row">
                     <span class="col-date">{{ $item['data']->created_at->format('d/m/y') }}</span>
-                    <span class="col-no">{{ $sandi }}</span>
+                    <span class="col-no">{{ $item['data']->jenis === 'masuk' ? '1' : '4' }}</span>
 
                     <span class="col-debet">
                         {{ $item['data']->jenis === 'keluar' ? number_format($item['data']->jumlah, 0, ',', '.') : '' }}

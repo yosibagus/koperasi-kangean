@@ -209,8 +209,7 @@ class TabunganController extends Controller
     */
         $request->validate([
             'rows'        => 'required|array|min:1',   // dari checkbox
-            'rowPosition' => 'required|integer|min:1',
-            'sandi'       => 'required'
+            'rowPosition' => 'required|integer|min:1'
         ]);
 
         /*
@@ -267,8 +266,7 @@ class TabunganController extends Controller
             'rows'      => $rowsToPrint,
             'saldo'     => $saldo,
             'rekening'  => $rekening,
-            'sandi'     => $request->sandi,
-            'emptyRows' => $emptyRows
+            'emptyRows' => $emptyRows + 2
         ])->setPaper([0, 0, 396.85, 538.58], 'portrait');
         // 140mm x 190mm (PLQ-20 PASSBOOK)
 
