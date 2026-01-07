@@ -115,26 +115,6 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-lg-4">
-                    <div class="mb-3">
-                        <label for="ktp" class="form-label required">NIK KTP</label>
-                        <input type="text" name="ktp" id="ktp" minlength="16"
-                          class="form-control @error('ktp') is-invalid @enderror" placeholder="NIK" required value="{{ $rekening->ktp }}"/>
-                        <small class="invalid-feedback text-danger">
-                          @error('ktp')
-                            {{ $message }}
-                          @enderror
-                        </small>
-                      </div>
-                    <div class="mb-3">
-                      <label for="foto_ktp" class="form-label required">Foto KTP</label>
-                      <input type="file" class="form-control" id="foto_ktp" name="foto_ktp"
-                        onchange="previewImage(event, 'previewLogo')">
-                      <small class="form-text text-muted">Upload foto KTP.</small>
-                      <img id="previewLogo" src="{{ route('ktp', $rekening->foto_ktp) }}" alt="Preview Logo" class="img-thumbnail mt-2" width="100%"
-                        style="max-width: 100%; height: auto;">
-                    </div>
-                  </div>
                 </div>
               </div>
             </form>

@@ -166,6 +166,7 @@ Route::middleware(['auth', 'verified', 'role:admin,teller', 'aktif'])->group(fun
     Route::get('/tabungan/{rekening}/cetak', [TabunganController::class, 'cetak'])->name('tabungan.cetak');
     // Route::post('/tabungan/cetak-pdf', [TabunganController::class, 'cetakPdf']);
     Route::post('/tabungan/cetak-pdf/{rekening}', [TabunganController::class, 'cetakPdf'])->name('tabungan.cetak.pdf');
+    Route::get('/rkpkntl', [TabunganController::class, 'rekap_tabungan'])->name('tabungan.rekap-semua');
 
     // bagian pinjaman
     Route::post('/pinjaman', [PinjamanController::class, 'store'])->name('pinjaman.store');

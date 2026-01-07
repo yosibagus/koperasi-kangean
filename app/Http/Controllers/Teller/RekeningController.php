@@ -23,16 +23,6 @@ class RekeningController extends Controller
 {
     public function index()
     {
-        // $teller = auth()->user()->role;
-        // $profile_id = auth()->user()->profile_id;
-        // if ($teller == 'teller') {
-        //     $rekenings = Rekening::with(['anggotas.profile', 'tellers.profile'])->whereHas('tellers', function($query) use ($profile_id) {
-        //         $query->where('profile_id', $profile_id);
-
-        //     })->get();
-        // } else {
-        //     $rekenings = Rekening::with(['anggotas.profile', 'tellers.profile'])->get();
-        // }
 
         $rekenings = Rekening::with(['anggotas.profile', 'tellers.profile'])
             ->where(function ($query) {
@@ -42,8 +32,6 @@ class RekeningController extends Controller
                     ->orDoesntHave('anggotas'); // Jika anggotas null, tetap tampil
             })
             ->get();
-        // dd(Rekening::get());
-
 
         return view('teller.rekening.rekening-view', compact('rekenings'));
     }
@@ -72,32 +60,9 @@ class RekeningController extends Controller
 
         $file_name = $token . '.' . $file->getClientOriginalExtension();
 
-        // Prefix berdasarkan created_at profile
-        $no_profile = Profile::where('id_profile', Session::get('bank'))
-            ->first()
-            ->created_at->format('dmy');
-
-        // Ambil rekening terakhir dengan prefix yang sama, urut angka terbesar
-        $id = Auth::user()->profile_id;
-        $lastRekening = Rekening::where('profile_id', $id)
-            ->orderByRaw('CAST(no_rekening AS UNSIGNED) DESC')
-            ->first();
-
-        if (!$lastRekening) {
-            // Tidak ada nomor sebelumnya → mulai dari 0001
-            $newSerial = "0001";
-        } else {
-            // Ambil 4 digit terakhir dan tambahkan 1
-            $lastNumber = intval(substr($lastRekening->no_rekening, -4));
-            $newSerial = str_pad($lastNumber + 1, 4, '0', STR_PAD_LEFT);
-        }
-
-        // Nomor rekening final
-        $no_rekening = $no_profile . $newSerial;
-
         $data = [
             'token_rekening' => $token,
-            'no_rekening' => $no_rekening,
+            'no_rekening' => $request->no_rekening,
             'nama_rekening' => $nama_rekening,
             'anggota' => null,
             'kategori_id' => $kategori_id,
@@ -145,22 +110,11 @@ class RekeningController extends Controller
         $alamat = $request->alamat;
         $kode_pos = $request->kode_pos;
         $telepon = $request->telepon;
-        $ktp = $request->ktp;
         $deskripsi = $request->deskripsi;
         if ($request->email == null) {
             $anggota = null;
         } else {
             $anggota = User::where('email', $request->email)->first()->id;
-        }
-        if ($request->hasFile('foto_ktp')) {
-            $file = $request->file('foto_ktp');
-            $file_name = $token . '.' . $file->getClientOriginalExtension();
-            $file->storeAs('private/ktp', $file_name, 'local');
-            if (Storage::exists('private/ktp/' . $rekening->foto_ktp)) {
-                Storage::delete('private/ktp/' . $rekening->foto_ktp);
-            }
-        } else {
-            $file_name = $rekening->foto_ktp;
         }
 
         $data = [
@@ -171,8 +125,6 @@ class RekeningController extends Controller
             'alamat' => $alamat,
             'kode_pos' => $kode_pos,
             'telepon' => $telepon,
-            'ktp' => $ktp,
-            'foto_ktp' => $file_name,
             'deskripsi' => $deskripsi,
         ];
 

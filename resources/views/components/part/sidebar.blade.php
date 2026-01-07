@@ -65,6 +65,12 @@
           <h4 class="fw-bold nav-text">Laporan</h4>
         </li>
         <li>
+          <a href="rkpkntl" aria-expanded="false">
+            <i class="flaticon-381-television"></i>
+            <span class="nav-text">Rekap Semua</span>
+          </a>
+        </li>
+        <li>
           <a href="/tabungan/laporan" aria-expanded="false">
             <i class="flaticon-381-layer-1"></i>
             <span class="nav-text">Tabungan</span>
